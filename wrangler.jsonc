@@ -1,0 +1,5 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "hireable",
+  "compatibility_date": "2026-11-15"
+}
