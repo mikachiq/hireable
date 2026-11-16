@@ -1,5 +1,5 @@
-import { StartApplication } from "@/features/application-workspace/components/start-application";
+import { ApplicationWorkspace } from "@/features/application-workspace/components/application-workspace";
 
 export default function Home() {
-  return <StartApplication />;
+  return <ApplicationWorkspace />;
 }
