@@ -22,9 +22,20 @@
 .resume-upload>strong { grid-column:1; }
 .resume-upload>span:not(.button) { grid-column:1; }
 .resume-upload>.button { grid-column:2; grid-row:1/3; }
-.single-workspace .resume-preview { flex:1; min-height:250px; border:1px solid var(--line); border-radius:12px; margin-top:20px; overflow:hidden; }
-.resume-preview summary { padding:16px 20px; background:var(--canvas); }
-.resume-preview pre { padding:0 20px; }
+.resume-preview { border:1px solid var(--line); border-radius:12px; margin-top:20px; overflow:hidden; font-size:13px; }
+.resume-preview summary { padding:16px 20px; background:var(--canvas); cursor:pointer; }
+.resume-preview summary:focus-visible,.resume-preview-content:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+.resume-preview-content { max-height:26rem; overflow:auto; padding:0 20px; overflow-wrap:anywhere; }
+.resume-preview-section { padding:16px 0; }
+.resume-preview-section + .resume-preview-section { border-top:1px solid var(--line); }
+.resume-preview-section h3 { margin:0 0 8px; font-size:14px; }
+.resume-preview-section p { margin:0; line-height:1.65; white-space:pre-line; }
+.resume-preview-section p + p { margin-top:10px; }
+.resume-preview-entry + .resume-preview-entry { margin-top:16px; }
+.resume-preview-entry h4 { margin:0; font-size:inherit; font-weight:700; line-height:1.65; white-space:pre-line; }
+.resume-preview-entry ul { margin:0; padding-inline-start:1.35em; line-height:1.65; }
+.resume-preview-entry h4 + ul { margin-top:5px; }
+.resume-preview-entry li + li { margin-top:4px; }
 .single-workspace .job-import { min-height:88px; display:flex; align-items:center; }
 .job-import .import-label { margin:0; }
 .single-workspace .job-import input { max-width:220px; }
@@ -34,9 +45,6 @@
 .resume-upload:hover,.resume-upload:focus-within { border-color:var(--accent); background:var(--canvas); }
 .resume-upload>span:not(.button) { font-size:13px; color:var(--muted); }
 .resume-upload.is-disabled { opacity:.5; cursor:wait; }
-.resume-preview { margin-top:16px; font-size:13px; }
-.resume-preview summary { cursor:pointer; }
-.resume-preview pre { font:inherit; white-space:pre-wrap; overflow-wrap:anywhere; max-height:280px; overflow:auto; line-height:1.7; }
 .import-status { display:flex; align-items:center; gap:12px; font-size:13px; color:var(--muted); }
 .import-status:empty { display:none; }
 .panel-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:42px; }

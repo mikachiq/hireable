@@ -1,10 +1,14 @@
-export async function readDocument(file: File): Promise<string> {
+import { pdfPreviewText } from "./pdf-preview-text";
+
+type ResumeDocument = { text: string; previewText?: string };
+
+export async function readDocument(file: File): Promise<ResumeDocument> {
   if (file.size > 15 * 1024 * 1024) throw new Error("Choose a file smaller than 15 MB.");
   const extension = file.name.split(".").pop()?.toLowerCase();
-  if (extension === "txt") return file.text();
+  if (extension === "txt") return { text: await file.text() };
   if (extension === "docx") {
     const mammoth = await import("mammoth/mammoth.browser");
-    return (await mammoth.extractRawText({ arrayBuffer: await file.arrayBuffer() })).value;
+    return { text: (await mammoth.extractRawText({ arrayBuffer: await file.arrayBuffer() })).value };
   }
   if (extension === "pdf") {
     const pdf = await import("pdfjs-dist");
@@ -13,12 +17,15 @@ export async function readDocument(file: File): Promise<string> {
     const document = await task.promise;
     try {
       const pages: string[] = [];
+      const previewPages: string[] = [];
       for (let index = 1; index <= document.numPages; index++) {
         const page = await document.getPage(index);
         const content = await page.getTextContent();
-        pages.push(content.items.map((item) => "str" in item ? item.str : "").join(" "));
+        const items = content.items.filter((item) => "str" in item);
+        pages.push(items.map((item) => item.str).join(" "));
+        previewPages.push(pdfPreviewText(items));
       }
-      return pages.join("\n\n");
+      return { text: pages.join("\n\n"), previewText: previewPages.join("\n\n") };
     } finally { await task.destroy(); }
   }
   throw new Error("Upload a PDF, DOCX, or TXT file.");
